@@ -89,6 +89,13 @@ const Index = () => {
     return { totalStock, lowStock, categories, active: products.length };
   }, [products]);
 
+  const statCards = [
+    { label: "Stock total", value: stats.totalStock, Icon: Boxes },
+    { label: "Productos activos", value: stats.active, Icon: Gauge },
+    { label: "Categorías", value: stats.categories, Icon: Truck },
+    { label: "Alertas mínimas", value: stats.lowStock, Icon: ShieldAlert },
+  ];
+
   const filteredProducts = products.filter((product) =>
     [product.name, product.sku, product.category, product.location].join(" ").toLowerCase().includes(query.toLowerCase()),
   );
@@ -152,16 +159,11 @@ const Index = () => {
             </header>
 
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              {[
-                ["Stock total", stats.totalStock, Boxes],
-                ["Productos activos", stats.active, Gauge],
-                ["Categorías", stats.categories, Truck],
-                ["Alertas mínimas", stats.lowStock, ShieldAlert],
-              ].map(([label, value, Icon]) => (
-                <div key={String(label)} className="rounded-lg border border-border bg-card/70 p-4 transition hover:-translate-y-1 hover:border-primary/40">
+              {statCards.map(({ label, value, Icon }) => (
+                <div key={label} className="rounded-lg border border-border bg-card/70 p-4 transition hover:-translate-y-1 hover:border-primary/40">
                   <Icon className="mb-4 h-5 w-5 text-primary" />
-                  <p className="text-sm text-muted-foreground">{label as string}</p>
-                  <p className="mt-1 text-3xl font-semibold text-foreground">{String(value)}</p>
+                  <p className="text-sm text-muted-foreground">{label}</p>
+                  <p className="mt-1 text-3xl font-semibold text-foreground">{value}</p>
                 </div>
               ))}
             </div>
